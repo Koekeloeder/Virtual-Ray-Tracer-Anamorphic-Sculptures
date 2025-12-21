@@ -10,7 +10,7 @@ public class MeshCompensation : MonoBehaviour
     public Mesh originalMesh;
     public Light sceneLight;
     public Transform viewPoint;
-    [Tooltip("Object that Deforms the mesh (mirror or refractive surface)")]
+    [Tooltip("Deformer is the object that deforms the mesh (mirror or refractive surface)")]
     public Deformer deformer;
 
     [Header("Compensation Parameters")]

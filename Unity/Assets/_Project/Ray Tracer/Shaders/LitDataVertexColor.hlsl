@@ -323,10 +323,10 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
         float targetMetallic = saturate(uv3.z);
         float deviation = saturate(uv3.w);
 
-        //Ensure valid normal
+        // Ensure valid normal
         float3 N = normalize(surfaceData.normalWS);
 
-        //Ensure valid tangent
+        // Ensure valid tangent
         float3 T = surfaceData.tangentWS;
         if (!all(isfinite(T)) || length(T) < 0.001)
         {
@@ -338,7 +338,7 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
             T = normalize(T);
         }
 
-        //Compute deformation direction in tangent space
+        // Compute deformation direction in tangent space
         float3 error = originalNormalWS - deformedNormalWS;
 
         // Project error into tangent plane
