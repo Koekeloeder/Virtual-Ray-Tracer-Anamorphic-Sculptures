@@ -314,19 +314,19 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
 
     #ifdef ANISOTROPIC_COMPENSATION
 
-        // --- Read UV3 payload ---
+        // read uvs
         float4 uv3 = input.texCoord3;
         uv3 = all(isfinite(uv3)) ? uv3 : float4(0,0,0,0);
 
         float targetSmoothness = saturate(uv3.x);
-        float targetAniso      = clamp(uv3.y, -1.0, 1.0);
-        float targetMetallic   = saturate(uv3.z);
-        float deviation        = saturate(uv3.w);
+        float targetAniso = clamp(uv3.y, -1.0, 1.0);
+        float targetMetallic = saturate(uv3.z);
+        float deviation = saturate(uv3.w);
 
-        // --- Ensure valid normal ---
+        //Ensure valid normal
         float3 N = normalize(surfaceData.normalWS);
 
-        // --- Ensure valid tangent ---
+        //Ensure valid tangent
         float3 T = surfaceData.tangentWS;
         if (!all(isfinite(T)) || length(T) < 0.001)
         {
@@ -338,7 +338,7 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
             T = normalize(T);
         }
 
-        // --- Compute deformation direction in tangent space ---
+        //Compute deformation direction in tangent space
         float3 error = originalNormalWS - deformedNormalWS;
 
         // Project error into tangent plane
@@ -354,20 +354,20 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
             T = normalize(lerp(T, corr, w));
         }
 
-        // --- Apply tangent ---
+        // Apply tangent
         surfaceData.tangentWS = T;
 
-        // --- Blend material properties ---
+        // Blend material properties
         float wMat = deviation;
 
-        surfaceData.anisotropy          = lerp(surfaceData.anisotropy,          targetAniso,      wMat);
+        surfaceData.anisotropy = lerp(surfaceData.anisotropy, targetAniso, wMat);
         surfaceData.perceptualSmoothness = lerp(surfaceData.perceptualSmoothness, targetSmoothness, wMat);
-        surfaceData.metallic            = lerp(surfaceData.metallic,            targetMetallic,   wMat);
+        surfaceData.metallic = lerp(surfaceData.metallic, targetMetallic, wMat);
 
-        // --- Final clamps ---
-        surfaceData.anisotropy          = clamp(surfaceData.anisotropy, -0.9, 0.9);
+        // Final clamps 
+        surfaceData.anisotropy  = clamp(surfaceData.anisotropy, -0.9, 0.9);
         surfaceData.perceptualSmoothness = clamp(surfaceData.perceptualSmoothness, 0.02, 0.98);
-        surfaceData.metallic            = saturate(surfaceData.metallic);
+        surfaceData.metallic = saturate(surfaceData.metallic);
 
     #endif
 

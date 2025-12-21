@@ -50,10 +50,4 @@ public class Sphere : Deformer
     {
         return isRefractive ? "sphere_lens" : "sphere_mirror";
     }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = isRefractive ? Color.cyan : Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, radius);
-    }
 }
