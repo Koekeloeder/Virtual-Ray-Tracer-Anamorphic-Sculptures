@@ -2977,7 +2977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2680403823875736736, guid: 60ed96064c5523b46b7a7bd67e36e6d7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.999939
+      value: -7.9999084
       objectReference: {fileID: 0}
     - target: {fileID: 2699348666738490957, guid: 60ed96064c5523b46b7a7bd67e36e6d7, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3209,7 +3209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3268545913546083501, guid: 60ed96064c5523b46b7a7bd67e36e6d7, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -19.000061
+      value: -19.00003
       objectReference: {fileID: 0}
     - target: {fileID: 3348192262515427217, guid: 60ed96064c5523b46b7a7bd67e36e6d7, type: 3}
       propertyPath: m_AnchorMax.y
@@ -6125,7 +6125,6 @@ GameObject:
   - component: {fileID: 1487125634}
   - component: {fileID: 1487125633}
   - component: {fileID: 1487125632}
-  - component: {fileID: 1487125631}
   m_Layer: 7
   m_Name: Original Mesh
   m_TagString: Untagged
@@ -6133,31 +6132,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1487125631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1487125630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82eaeadf49a1d254bbcb0428ed167904, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  originalMesh: {fileID: -2432090755550338912, guid: 725d473c4392d3843bdecf7047918442, type: 3}
-  sceneLight: {fileID: 0}
-  viewPoint: {fileID: 0}
-  deformer: {fileID: 0}
-  minCompensation: 0.1
-  maxCompensation: 1.94
-  lightIntensity: 1
-  baseSmoothness: 0.402
-  baseAnisotropy: 0.223
-  baseMetallic: 0.633
-  colorCompensation: 1
-  enableAnisotropicData: 1
-  autoUpdateOnChange: 1
 --- !u!114 &1487125632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7077,6 +7051,7 @@ GameObject:
   - component: {fileID: 1828706994}
   - component: {fileID: 1828706993}
   - component: {fileID: 1828706992}
+  - component: {fileID: 1828706990}
   m_Layer: 7
   m_Name: Deformed Mesh
   m_TagString: Untagged
@@ -7084,6 +7059,31 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1828706990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1828706989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82eaeadf49a1d254bbcb0428ed167904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  originalMesh: {fileID: -2432090755550338912, guid: 725d473c4392d3843bdecf7047918442, type: 3}
+  sceneLight: {fileID: 1585537528}
+  viewPoint: {fileID: 259578701}
+  deformer: {fileID: 755870497}
+  minCompensation: 1.11
+  maxCompensation: 2.26
+  lightIntensity: 1
+  baseSmoothness: 0.64
+  baseAnisotropy: -0.351
+  baseMetallic: 0.279
+  colorCompensation: 1
+  enableAnisotropicData: 1
+  autoUpdateOnChange: 1
 --- !u!114 &1828706992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7181,7 +7181,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828706989}
-  m_Mesh: {fileID: 1057324383}
+  m_Mesh: {fileID: -2432090755550338912, guid: 725d473c4392d3843bdecf7047918442, type: 3}
 --- !u!114 &1828706997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7467,19 +7467,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.75070626
+      value: 0.98846465
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.014872527
+      value: 0.14818728
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6603392
+      value: 0.030930273
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.01308223
+      value: -0.004636962
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
