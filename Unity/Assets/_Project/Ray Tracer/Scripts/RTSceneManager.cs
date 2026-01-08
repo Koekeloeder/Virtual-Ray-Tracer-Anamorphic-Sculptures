@@ -434,6 +434,18 @@ namespace _Project.Ray_Tracer.Scripts
                         ControlPanel.ShowEmptyProperties();
                     }
                     break;
+                case ControlPanel.SignalType.Compensation:
+                    MeshCompensation compensation = FindObjectOfType<MeshCompensation>();
+                    if (compensation != null)
+                    {
+                        ControlPanel.ShowMeshCompensationProperties(compensation);
+                    }
+                    else
+                    {
+                        Deselect();
+                        ControlPanel.ShowEmptyProperties();
+                    }
+                    break;
             }
         }
 

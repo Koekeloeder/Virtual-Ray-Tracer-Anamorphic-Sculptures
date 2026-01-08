@@ -18,7 +18,8 @@ namespace _Project.UI.Scripts.Control_Panel
         {
             RayTracer,
             Camera,
-            Object
+            Object,
+            Compensation
         }
 
         public void Subscribe(Action<SignalType> function)
@@ -26,6 +27,7 @@ namespace _Project.UI.Scripts.Control_Panel
             rayTracerButton.onClick.AddListener(() => function(SignalType.RayTracer));
             cameraButton.onClick.AddListener(() => function(SignalType.Camera));
             objectButton.onClick.AddListener(() => function(SignalType.Object));
+            compensationButton.onClick.AddListener(() => function(SignalType.Compensation));
         }
         
         [SerializeField]
@@ -37,6 +39,8 @@ namespace _Project.UI.Scripts.Control_Panel
         [SerializeField]
         private MeshProperties meshProperties;
         [SerializeField]
+        private MeshCompensationProperties meshCompensationProperties;
+        [SerializeField]
         private TextMeshProUGUI emptyProperties;
         [SerializeField]
         private FolderButton rayTracerButton;
@@ -44,6 +48,8 @@ namespace _Project.UI.Scripts.Control_Panel
         private FolderButton cameraButton;
         [SerializeField]
         private FolderButton objectButton;
+        [SerializeField]
+        private FolderButton compensationButton;
 
         /// <summary>
         /// Show the control panel. By default this will not show any properties, just the panel background.
@@ -62,9 +68,11 @@ namespace _Project.UI.Scripts.Control_Panel
             cameraProperties.Hide();
             lightProperties.Hide();
             meshProperties.Hide();
+            meshCompensationProperties.Hide();
             emptyProperties.gameObject.SetActive(false);
             cameraButton.Conceal();
             objectButton.Conceal();
+            compensationButton.Conceal();
 
             Show();
             rayTracerButton.Highlight();
@@ -80,9 +88,11 @@ namespace _Project.UI.Scripts.Control_Panel
             rayTracerProperties.Hide();
             lightProperties.Hide();
             meshProperties.Hide();
+            meshCompensationProperties.Hide();
             emptyProperties.gameObject.SetActive(false);
             objectButton.Conceal();
             rayTracerButton.Conceal();
+            compensationButton.Conceal();
 
             Show();
             cameraButton.Highlight();
@@ -98,10 +108,12 @@ namespace _Project.UI.Scripts.Control_Panel
             rayTracerProperties.Hide();
             cameraProperties.Hide();
             meshProperties.Hide();
+            meshCompensationProperties.Hide();
             emptyProperties.gameObject.SetActive(false);
             rayTracerButton.Conceal();
             cameraButton.Conceal();
-            
+            compensationButton.Conceal();
+
             Show();
             objectButton.Highlight();
             lightProperties.Show(light);
@@ -116,13 +128,36 @@ namespace _Project.UI.Scripts.Control_Panel
             rayTracerProperties.Hide();
             cameraProperties.Hide();
             lightProperties.Hide();
+            meshCompensationProperties.Hide();
             emptyProperties.gameObject.SetActive(false);
             cameraButton.Conceal();
             rayTracerButton.Conceal();
-            
+            compensationButton.Conceal();
+
+
             Show();
             objectButton.Highlight();
             meshProperties.Show(mesh);
+        }
+        
+        /// <summary>
+        /// Show the mesh compensation properties for <paramref name="compensation"/>. These properties can be changed via the shown UI.
+        /// </summary>
+        /// <param name="compensation"> The <see cref="MeshCompensation"/> whose properties will be shown. </param>
+        public void ShowMeshCompensationProperties(MeshCompensation compensation)
+        {
+            rayTracerProperties.Hide();
+            cameraProperties.Hide();
+            lightProperties.Hide();
+            meshProperties.Hide();
+            emptyProperties.gameObject.SetActive(false);
+            cameraButton.Conceal();
+            rayTracerButton.Conceal();
+            objectButton.Conceal();
+
+            Show();
+            compensationButton.Highlight();
+            meshCompensationProperties.Show(compensation);
         }
 
         public void ShowEmptyProperties()
@@ -147,10 +182,10 @@ namespace _Project.UI.Scripts.Control_Panel
             cameraProperties.Hide();
             lightProperties.Hide();
             meshProperties.Hide();
+            meshCompensationProperties.Hide();
             emptyProperties.gameObject.SetActive(false);
             gameObject.SetActive(false);
         }
-
         private void Start()
         {
             ShowRayTracerProperties();
