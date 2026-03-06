@@ -265,7 +265,7 @@ Material:
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _Shininess: 57.227688
-    - _Smoothness: 0.872
+    - _Smoothness: 1
     - _SmoothnessRemapMax: 1
     - _SmoothnessRemapMin: 0
     - _Specular: 0

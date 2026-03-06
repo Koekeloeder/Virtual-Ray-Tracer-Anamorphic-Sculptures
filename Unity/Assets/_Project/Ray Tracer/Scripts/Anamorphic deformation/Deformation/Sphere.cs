@@ -51,8 +51,11 @@ public class Sphere : Deformer
         return isRefractive ? "sphere_lens" : "sphere_mirror";
     }
 
-    void Start()
+    // Not the most elegant solution, but some component is altering the IoR on start
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.5f);
         GetComponent<Renderer>().material.SetFloat("_Ior", refractiveIndex);
+        Debug.Log($"IOR set to {refractiveIndex}");
     }
 }
