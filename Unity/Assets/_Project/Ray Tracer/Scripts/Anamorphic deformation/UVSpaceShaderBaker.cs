@@ -146,7 +146,10 @@ public class UVSpaceShaderBaker : MonoBehaviour
 
     void Save(Texture2D tex, string name)
     {
-        if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
+        if (!Directory.Exists(outputFolder))
+        {
+            Directory.CreateDirectory(outputFolder);
+        }
         File.WriteAllBytes(Path.Combine(outputFolder, name), tex.EncodeToPNG());
     }
 #endif
@@ -154,13 +157,23 @@ public class UVSpaceShaderBaker : MonoBehaviour
     bool Validate()
     {
         if (!originalMeshFilter || !deformedMeshFilter)
-        { Debug.LogError("Assign both mesh filters!"); return false; }
+        { 
+            Debug.LogError("Assign both mesh filters!");
+            return false;
+        }
         if (!bakerShader)
-        { Debug.LogError("Assign the baker shader!"); return false; }
+        { 
+            Debug.LogError("Assign the baker shader!");
+            return false;
+        }
         if (!directionalLight)
+        {
             Debug.LogWarning("No light assigned");
+        }
         if (originalMeshFilter.sharedMesh.vertexCount != deformedMeshFilter.sharedMesh.vertexCount)
+        {
             Debug.LogWarning("Vertex counts differ");
+        }
         return true;
     }
 }

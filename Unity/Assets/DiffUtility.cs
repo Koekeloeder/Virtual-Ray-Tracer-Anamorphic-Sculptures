@@ -9,7 +9,7 @@ using UnityEditor;
 /// Run after UVSpaceShaderBaker or ScreenshotComparison have produced their outputs.
 /// and assign the desired
 /// Two diff outputs per pair:
-///  - Raw :absolute per-channel difference
+///  - Raw :absolute difference per channel
 ///  - Normalized no error = black, max error = white
 /// </summary>
 public class DiffUtility : MonoBehaviour
@@ -19,7 +19,6 @@ public class DiffUtility : MonoBehaviour
     public Texture2D compareTextureA;
     public Texture2D compareTextureB;
 
-    [Header("Paint Texture")]
     [Tooltip("The compensation texture to multiply with the base color (e.g. UV bake output)")]
     public Texture2D compensationTexture;
 
@@ -31,11 +30,8 @@ public class DiffUtility : MonoBehaviour
     public Texture2D diffANormalized;
     public Texture2D diffBRaw;
     public Texture2D diffBNormalized;
-    public Texture2D paintTexture;
 
     public int cuttOff = 2;
-
-    // -------------------------------------------------------------------------
 
     [ContextMenu("Compute Diffs")]
     public void ComputeDiffs()
@@ -77,7 +73,10 @@ public class DiffUtility : MonoBehaviour
         Debug.Log($"[Diff] B vs Reference\n" +
                   $"  min:{minErr:F4}  mean:{meanErr:F4}  max:{maxErr:F4}");
 
-        if (!Directory.Exists(outputFolder)) Directory.CreateDirectory(outputFolder);
+        if (!Directory.Exists(outputFolder))
+        {
+            Directory.CreateDirectory(outputFolder);
+        }
         Write(diffARaw, $"Diff_{compareTextureA.name}_Raw.png");
         Write(diffANormalized, $"Diff_{compareTextureA.name}_Normalized.png");
         Write(diffBRaw, $"Diff_{compareTextureB.name}_Raw.png");
