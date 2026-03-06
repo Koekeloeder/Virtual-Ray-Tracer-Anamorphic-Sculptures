@@ -6646,6 +6646,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3364825822907551461, guid: c271906e89fa0f342a70789873c17236, type: 3}
+      propertyPath: ShowRays
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3364825822907551461, guid: c271906e89fa0f342a70789873c17236, type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 73736809}
@@ -7071,7 +7075,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778864479}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: feaa7804ef256db41ba5731bf49e63ca, type: 3}
   m_Name: 
@@ -7094,7 +7098,6 @@ MonoBehaviour:
     height: 130
   showOverlay: 0
   captureCamera: {fileID: 73736809}
-  sceneToggleManager: {fileID: 410321183}
 --- !u!114 &1778864484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7110,6 +7113,7 @@ MonoBehaviour:
   referenceTexture: {fileID: 2800000, guid: 1aa92be75e8c45b4683d89ffafad5b17, type: 3}
   compareTextureA: {fileID: 2800000, guid: 9c82da586c0cc2b4abc8b341d31257b9, type: 3}
   compareTextureB: {fileID: 2800000, guid: 29437003ee6108847a3ea5bb3dfb5a3c, type: 3}
+  compensationTexture: {fileID: 0}
   outputFolder: Assets/Screenshots/Cylinder
   diffARaw: {fileID: 1684945132}
   diffANormalized: {fileID: 1059734144}
@@ -7273,7 +7277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalMesh: {fileID: -2432090755550338912, guid: 046e456e3b791c44591d19a92112b60d, type: 3}
   directionalLight: {fileID: 1136388290}
-  enableFaceColors: 1
+  enableFaceColors: 0
   faceColors:
   - {r: 0, g: 1, b: 0.69739413, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
@@ -7668,19 +7672,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9477446
+      value: -0.4567598
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.04778194
+      value: 0.009993025
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.3150316
+      value: 0.88932115
       objectReference: {fileID: 0}
     - target: {fileID: 3379506522100200911, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.01588278
+      value: 0.019456632
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa7cec59df0025d4896ac99db41e4250, type: 3}
