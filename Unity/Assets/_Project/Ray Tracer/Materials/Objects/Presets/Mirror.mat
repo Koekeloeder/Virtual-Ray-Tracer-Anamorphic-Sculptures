@@ -137,6 +137,8 @@ Material:
     - _BlendMode: 0
     - _BreakingsIndex: 1.5
     - _CoatMask: 1
+    - _CompensationDelta: 0
+    - _CompensationRatio: 0
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5
@@ -163,6 +165,7 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
+    - _FaceColor: 0
     - _Glossiness: 0.5
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5

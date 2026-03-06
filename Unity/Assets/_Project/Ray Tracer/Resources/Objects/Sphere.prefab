@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 2097155
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 79cae673e2b06ab4c967933347beb21b, type: 2}
+  - {fileID: 2100000, guid: a2a744a08b587844aa0d408cd2c0654b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TransparentMaterial: {fileID: 0}
   OpaqueMaterial: {fileID: 0}
-  MirrorMaterial: {fileID: 0}
+  MirrorMaterial: {fileID: 2100000, guid: a2a744a08b587844aa0d408cd2c0654b, type: 2}
   Type: 0
   shadeSmooth: 1
 --- !u!114 &6716819065396824742

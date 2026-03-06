@@ -1,6 +1,7 @@
 //-------------------------------------------------------------------------------------
 // Defines
 //-------------------------------------------------------------------------------------
+
 // Use surface gradient normal mapping as it handle correctly triplanar normal mapping and multiple UVSet
 #ifndef SHADER_STAGE_RAY_TRACING
 #define SURFACE_GRADIENT
@@ -54,42 +55,6 @@ struct LayerTexCoord
     float3 vertexTangentWS3, vertexBitangentWS3;
 #endif
 };
-
-float3 _ViewPos;
-float3 _OriginalLightPos;
-float3 _DeformedLightPos;
-float _LightIntensity;
-float _CompensationMin;
-float _CompensationMax;
-float _SoftClampStrength;
-
-float SoftClamp(float x, float lo, float hi, float k)
-{
-    float mid = (hi + lo) * 0.5;
-    float rad = (hi - lo) * 0.5;
-    if (rad <= 0)
-    {
-        return clamp(x, lo, hi);
-    }
-    return mid + rad * tanh(k * (x - mid) / rad);
-}
-
-float ComputeLighting(float3 N, float3 Lpos, float3 posWS,
-                            float3 viewPos, float intensity)
-{
-    float3 L = Lpos - posWS;
-    float dist = length(L);
-    L /= dist;
-
-    float3 V = normalize(viewPos - posWS);
-    float3 H = normalize(L + V);
-
-    float diff = saturate(dot(N, L));
-    float spec = pow(saturate(dot(N, H)), 32);
-    float atten = 1.0 / (1.0 + dist * dist * 0.1);
-
-    return (diff + 0.3 * spec) * intensity * atten;
-}
 
 #ifdef SURFACE_GRADIENT
 void GenerateLayerTexCoordBasisTB(FragInputs input, inout LayerTexCoord layerTexCoord)
@@ -220,6 +185,7 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
 #if !defined(LIGHTMAP_ON) && defined(SURFACE_GRADIENT)
     input.texCoord1 = (_UVMappingMask.y + _UVDetailsMappingMask.y + _UVMappingMaskEmissive.y) > 0 ? input.texCoord1 : 0;
 #endif
+
 // Don't dither if displaced tessellation (we're fading out the displacement instead to match the next LOD)
 #if !defined(SHADER_STAGE_RAY_TRACING) && !defined(_TESSELLATION_DISPLACEMENT)
 #ifdef LOD_FADE_CROSSFADE // enable dithering LOD transition if user select CrossFade transition in LOD group
@@ -265,115 +231,30 @@ void GetSurfaceAndBuiltinData(FragInputs input, float3 V, inout PositionInputs p
     GENERIC_ALPHA_TEST(alphaValue, alphaCutoff);
 #endif
 
+    // We perform the conversion to world of the normalTS outside of the GetSurfaceData
+    // so it allow us to correctly deal with detail normal map and optimize the code for the layered shaders
     float3 normalTS;
     float3 bentNormalTS;
     float3 bentNormalWS;
-    
-    // ALWAYS read these - both compensation modes need them
-    float3 originalNormalWS = normalize(input.texCoord1.xyz);
-    float angleDeviation = input.texCoord1.w;
-    float3 originalPositionWS = input.texCoord2.xyz;
-
     float alpha = GetSurfaceData(input, layerTexCoord, surfaceData, normalTS, bentNormalTS);
-    
     GetNormalWS(input, normalTS, surfaceData.normalWS, doubleSidedConstants);
-    float3 deformedNormalWS = normalize(surfaceData.normalWS);
-
-    #ifdef COLOR_COMPENSATION
-        float3 deformedPositionWS = input.positionRWS;
-
-        // Expected vs actual lighting
-        float expected = ComputeLighting(originalNormalWS, _OriginalLightPos, originalPositionWS, _ViewPos, _LightIntensity);
-
-        float actual = ComputeLighting(deformedNormalWS, _DeformedLightPos, deformedPositionWS, _ViewPos, _LightIntensity);
-
-        float compensation = (actual > 1e-6) ? expected / actual : 1.0;
-
-        // Hard clamp
-        compensation = clamp(compensation, _CompensationMin, _CompensationMax);
-
-        // Soft clamp
-        compensation = SoftClamp(
-            compensation,
-            _CompensationMin,
-            _CompensationMax,
-            _SoftClampStrength
-        );
-
-        // Reinhard tone mapping
-        compensation = compensation / (1.0 + compensation);
-
-        // Apply compensation to surface color
-        surfaceData.baseColor *= compensation;
-    #endif
-
-    if (!all(isfinite(surfaceData.tangentWS)))
-    {
-        surfaceData.tangentWS = float3(1,0,0);
-    }
-
-    #ifdef ANISOTROPIC_COMPENSATION
-
-        // read uvs
-        float4 uv3 = input.texCoord3;
-        uv3 = all(isfinite(uv3)) ? uv3 : float4(0,0,0,0);
-
-        float targetSmoothness = saturate(uv3.x);
-        float targetAniso = clamp(uv3.y, -1.0, 1.0);
-        float targetMetallic = saturate(uv3.z);
-        float deviation = saturate(uv3.w);
-
-        // Ensure valid normal
-        float3 N = normalize(surfaceData.normalWS);
-
-        // Ensure valid tangent
-        float3 T = surfaceData.tangentWS;
-        if (!all(isfinite(T)) || length(T) < 0.001)
-        {
-            float3 up = abs(N.y) < 0.9 ? float3(0,1,0) : float3(1,0,0);
-            T = normalize(cross(up, N));
-        }
-        else
-        {
-            T = normalize(T);
-        }
-
-        // Compute deformation direction in tangent space
-        float3 error = originalNormalWS - deformedNormalWS;
-
-        // Project error into tangent plane
-        float3 corr = error - N * dot(error, N);
-        bool hasCorr = length(corr) > 0.001;
-
-        if (hasCorr)
-        {
-            corr = normalize(corr);
-
-            // Blend tangent toward correction direction
-            float w = deviation;        // 0 = no deformation, 1 = strong deformation
-            T = normalize(lerp(T, corr, w));
-        }
-
-        // Apply tangent
-        surfaceData.tangentWS = T;
-
-        // Blend material properties
-        float wMat = deviation;
-
-        surfaceData.anisotropy = lerp(surfaceData.anisotropy, targetAniso, wMat);
-        surfaceData.perceptualSmoothness = lerp(surfaceData.perceptualSmoothness, targetSmoothness, wMat);
-        surfaceData.metallic = lerp(surfaceData.metallic, targetMetallic, wMat);
-
-        // Final clamps 
-        surfaceData.anisotropy  = clamp(surfaceData.anisotropy, -0.9, 0.9);
-        surfaceData.perceptualSmoothness = clamp(surfaceData.perceptualSmoothness, 0.02, 0.98);
-        surfaceData.metallic = saturate(surfaceData.metallic);
-
-    #endif
 
     surfaceData.geomNormalWS = input.tangentToWorld[2];
-    surfaceData.specularOcclusion = 1.0;
 
+    float3 compensation = input.color.rgb;
+    float mode = input.color.a;
+    
+    #ifdef COMPENSATION_RATIO
+        if (mode < 0.5f) {
+            // Face color mode (alpha ~0.0)
+            surfaceData.baseColor = compensation;
+        }
+        else {
+            // Compensation mode (alpha ~1.0) - multiply baseColor
+            surfaceData.baseColor *= compensation;
+        }
+    #endif
+    surfaceData.specularOcclusion = 1.0; // This need to be init here to quiet the compiler in case of decal, but can be override later.
 
 #if HAVE_DECALS
     if (_EnableDecals)

@@ -157,7 +157,7 @@ MonoBehaviour:
   m_RenderingPathDefaultCameraFrameSettings:
     bitDatas:
       data1: 136199855275869
-      data2: 4539628427610619928
+      data2: 4539628428684361752
     lodBias: 1
     lodBiasMode: 0
     lodBiasQualityLevel: 0
@@ -198,7 +198,7 @@ MonoBehaviour:
     materialQuality: 0
   m_RenderPipelineSettings:
     supportShadowMask: 1
-    supportSSR: 0
+    supportSSR: 1
     supportSSRTransparent: 1
     supportSSAO: 0
     supportSSGI: 1
@@ -224,7 +224,7 @@ MonoBehaviour:
     colorBufferFormat: 74
     supportCustomPass: 1
     customBufferFormat: 74
-    supportedLitShaderMode: 2
+    supportedLitShaderMode: 3
     planarReflectionResolution:
       m_Values: 000100000004000000040000
       m_SchemaId:

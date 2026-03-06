@@ -21,6 +21,7 @@ namespace _Project.UI.Scripts.Control_Panel
         private RayManager rayManager;
         private UIManager uiManager;
         private Volume globalVolume;
+        private SceneToggleManager sceneManager;
 
         [SerializeField]
         private BoolEdit renderShadowsEdit;
@@ -51,7 +52,6 @@ namespace _Project.UI.Scripts.Control_Panel
         [SerializeField]
         private FloatEdit superSamplingFactorEdit;
 
-        
 
         [SerializeField]
         private Button renderImageButton;
@@ -60,7 +60,13 @@ namespace _Project.UI.Scripts.Control_Panel
         [SerializeField]
         private Button FlyToRTCameraButton;
 
-        
+        [Header("Scene Toggle")]
+        [SerializeField]
+        private BoolEdit showMirrorSceneEdit;
+
+        [Header("Enable Color Compensation")]
+        [SerializeField]
+        private BoolEdit colorCompensationEdit;
 
         [SerializeField]
         private RenderTexture renderedImageUnityRT;
@@ -104,6 +110,7 @@ namespace _Project.UI.Scripts.Control_Panel
             rayTracer = UnityRayTracer.Get();
             rayManager = RayManager.Get();
             uiManager = UIManager.Get();
+            sceneManager = SceneToggleManager.Get();
 
             globalVolume = rayManager.recursiveRenderingSettings;
 
@@ -120,7 +127,10 @@ namespace _Project.UI.Scripts.Control_Panel
             loopEdit.IsOn = rayManager.Loop;
             speedEdit.Value = rayManager.Speed;
 
-            
+            showMirrorSceneEdit.IsOn = sceneManager.showingMirrorScene;
+
+            MeshCompensation mc = FindObjectOfType<MeshCompensation>();
+            if(mc != null) colorCompensationEdit.IsOn = mc.colorCompensation;
         }
 
         /// <summary>
@@ -201,7 +211,24 @@ namespace _Project.UI.Scripts.Control_Panel
                 FindObjectOfType<CameraController>().FlyToRTCamera(); // There should only be 1 CameraController.
             });
 
+            showMirrorSceneEdit.OnValueChanged += (value) =>
+            {
+                SceneToggleManager sceneManager = SceneToggleManager.Get();
+                if (sceneManager != null)
+                {
+                    sceneManager.ToggleMirrorScene(value);
+                }
+            };
             
+            colorCompensationEdit.OnValueChanged += (value) =>
+            {
+                MeshCompensation mc = FindObjectOfType<MeshCompensation>();
+                if (mc != null)
+                {
+                    mc.colorCompensation = value;
+                    mc.CalculateCompensation();
+                }
+            };
         }
     }
 }

@@ -6,7 +6,21 @@ Shader "Custom/LitTS"
         // They are use to fill a SurfaceData. With a MaterialGraph this should not exist.
 
         // Reminder. Color here are in linear but the UI (color picker) do the conversion sRGB to linear
-        _Color("Color", Color) = (1,1,1,1)
+        [MainColor] _BaseColor("BaseColor", Color) = (1,1,1,1)
+        [MainTexture] _BaseColorMap("BaseColorMap", 2D) = "white" {}
+        [HideInInspector] _BaseColorMap_MipInfo("_BaseColorMap_MipInfo", Vector) = (0, 0, 0, 0)
+
+        // Color which isn't affected by any illumination model
+        [HideInInspector] _UnalteredColor("UnalteredColor", Color) = (1, 1, 1, 1)
+
+        // These values are used by the renderer
+        _Ambient("Ambient", Range(0, 1)) = 0.2
+        [HDRP.Range(0, 1)] _Diffuse("Diffuse", Range(0.0, 1.0)) = 1.0
+        _DiffuseRemapMin("DiffuseRemapMin", Float) = 0.0
+        _DiffuseRemapMax("DiffuseRemapMax", Float) = 0.0
+        _Specular("Specular", Range(0, 1)) = 0.0
+        _RefractiveIndex("RefractiveIndex", Range(0,3)) = 1.33
+        _Shininess("Shininess", Float) = 32
 
         _Metallic("_Metallic", Range(0.0, 1.0)) = 0
         _Smoothness("Smoothness", Range(0.0, 1.0)) = 0.5

@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Glass Transparent
-  m_Shader: {fileID: 4800000, guid: 6b13649cdc0876c4987dc8313f9755f4, type: 3}
+  m_Shader: {fileID: 4800000, guid: 8b6cf7657ca206640931594a297db5ff, type: 3}
   m_ShaderKeywords: _ALPHATEST_ON _DISABLE_SSR_TRANSPARENT _ENABLE_FOG_ON_TRANSPARENT
     _MATERIAL_FEATURE_CLEAR_COAT _NORMALMAP_TANGENT_SPACE _REFRACTION_SPHERE _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 4
@@ -197,6 +197,7 @@ Material:
     - _COAT_THICKNESS: 5
     - _COAT_WEIGHT: 0
     - _CoatMask: 1
+    - _CompensationRatio: 0
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0
@@ -224,6 +225,7 @@ Material:
     - _EnableFogOnTransparent: 1
     - _EnableGeometricSpecularAA: 0
     - _EnergyConservingSpecularColor: 1
+    - _FaceColor: 0
     - _Glossiness: 0.5
     - _HeightAmplitude: 0.02
     - _HeightCenter: 0.5
@@ -235,7 +237,7 @@ Material:
     - _HeightTessAmplitude: 2
     - _HeightTessCenter: 0.5
     - _InvTilingScale: 1
-    - _Ior: 1.5
+    - _Ior: 1.33
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
     - _LinkDetailsWithBase: 1
@@ -259,7 +261,7 @@ Material:
     - _ReceivesSSR: 1
     - _ReceivesSSRTransparent: 0
     - _RefractionModel: 2
-    - _RefractiveIndex: 1.5
+    - _RefractiveIndex: 1.33
     - _RenderQueueType: 1
     - _RequireSplitLighting: 0
     - _Shininess: 57.227688

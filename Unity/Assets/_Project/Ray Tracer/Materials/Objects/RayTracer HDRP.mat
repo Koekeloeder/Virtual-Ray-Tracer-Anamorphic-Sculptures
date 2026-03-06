@@ -135,10 +135,15 @@ Material:
     - _AlphaToMask: 0
     - _AlphaToMaskInspectorValue: 0
     - _Ambient: 0.2
+    - _AnisotropicCompensation: 0
     - _Anisotropy: 0
     - _BackupAmbient: 0
     - _BlendMode: 0
     - _CoatMask: 0
+    - _ColorCompensation: 0
+    - _Color_Compensation: 0
+    - _CompensationMax: 4
+    - _CompensationMin: 0.25
     - _CullMode: 2
     - _CullModeForward: 2
     - _Cutoff: 0.5
@@ -178,6 +183,7 @@ Material:
     - _Ior: 1.5
     - _IridescenceMask: 1
     - _IridescenceThickness: 1
+    - _LightIntensity: 1
     - _LinkDetailsWithBase: 1
     - _MaterialID: 1
     - _Metallic: 0
@@ -240,13 +246,15 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DeformedLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}
     - _EmissionColor: {r: 1, g: 1, b: 1, a: 1}
-    - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmissiveColor: {r: 0.29803923, g: 0.4509804, b: 0.69803923, a: 1}
     - _EmissiveColorLDR: {r: 0, g: 0, b: 0, a: 1}
     - _InvPrimScale: {r: 1, g: 1, b: 0, a: 0}
     - _IridescenceThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
+    - _OriginalLightPos: {r: 0, g: 0, b: 0, a: 0}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _ThicknessRemap: {r: 0, g: 1, b: 0, a: 0}
     - _TransmittanceColor: {r: 1, g: 1, b: 1, a: 1}
@@ -254,6 +262,7 @@ Material:
     - _UVMappingMask: {r: 1, g: 0, b: 0, a: 0}
     - _UVMappingMaskEmissive: {r: 1, g: 0, b: 0, a: 0}
     - _UnalteredColor: {r: 1, g: 1, b: 1, a: 1}
+    - _ViewPos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &4352682823758173521
 MonoBehaviour:
