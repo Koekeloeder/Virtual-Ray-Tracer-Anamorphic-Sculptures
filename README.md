@@ -38,11 +38,17 @@ This application includes two different rendering methods. The ray tracer and th
 
 ### Anamorphic Sculptures Scenes
 
-In this version of VRT, three new levels were added to the application. These levels have the educational purpose of teaching users of VRT how to build anamorphic sculptures. The scenes were built by using the reflection level and tweaking it to display deformed objects whose reflection on one of three different types of mirrors (plane, cylinder, or sphere) displays a distinguishable object. All of the mirrors were built using prefabs and mirror textures already available in the application. To add the deformed sculptures to the scene, we uploaded their meshes to Unity and created prefabs using the `RTMesh` and specular textures present in the project. The introduction panels of the levels explain the deformation process and interaction with the objects in the scene is limited to only being able to change the colour, size, and position of the objects situated in front of the `RTCamera`. 
+In this version of VRT, four new levels were added to the application with the educational purpose of teaching users how anamorphic sculptures work. Three levels demonstrate reflective deformation across different mirror types: plane, cylinder, and sphere. One level demonstrates refractive deformation through a refractive sphere medium. Each level shows how a deformed mesh, when viewed through the correct optical element, produces a recognisable undistorted object.
+New scripts added in this version;
 
-The deformed meshes used in this project are constructed separately from VRT using a [C++ framework](https://github.com/irinaB11/anamorphicRayTracer/tree/main). This framework was originally developed for the students of Computer Graphics at the University of Groningen. Since its initial use, it has been modified to deform the meshes of objects based on their reflections on a mirror. 
+MeshDeformer.cs: deforms a mesh at runtime by tracing rays from the eye position through a deformer (mirror or lens) and repositioning each vertex accordingly
+MeshCompensation.cs: computes a per vertex diffuse shading compensation factor and stores it in the vertex color channel of the runtime mesh, correcting for the lighting error introduced by anamorphic deformation
+UVSpaceShaderBaker.cs: bakes original, deformed, and compensated lighting into UV-space textures for evaluation, including an unlit compensation texture representing the color to physically paint on the object
+DiffUtility.cs: loads baked or screenshot images from disk and computes raw and normalised difference maps along with mean and max error statistics
+ScreenshotHandler.cs: captures cropped screenshots.
+Deformer implementations: Sphere.cs, Cylinder.cs, Plane.cs are ray intersection implementations for each type
 
-Right now, the levels are limited to only showing how deforming an object based on reflection works. We hope that in the future, deforming an object using its refraction through an optic media will be added. Another possible development would be to make it possible to deform the object directly in VRT, eliminating the necessity of a separate framework.
+The deformation pipeline runs once on startup, repositioning each vertex by tracing a ray from the eye through the reflactive/refractive medium with the original mesh. And placing the vertex at the correct reflected or refracted position with a calculated distance d, derived from 'Bending the Light' by Pratt et al. For reflective surfaces the winding order of the mesh is corrected after deformation. For refractive surfaces, two refractions are computed using Snell's law with Schlick's approximation to determine whether reflection or refraction dominates.
 
 ### Further Details
 
